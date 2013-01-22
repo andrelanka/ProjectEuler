@@ -8,7 +8,7 @@ public class P0001_multiplesOf3And5 implements EulerProblem, EulerProblemTrivial
   private static final int BELOW=1000; 
   
   @Override
-  public Object complicatedWay() {
+  public Object standardWay() {
     return Long.valueOf(sum(3)+sum(5)-sum(15));
   }
   

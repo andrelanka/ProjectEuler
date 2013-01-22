@@ -11,7 +11,7 @@ public class P0003_largestPrimeNumber implements EulerProblem, EulerProblemTrivi
   private static final long NUMBER=600851475143L; 
   
   @Override
-  public Object complicatedWay() {
+  public Object standardWay() {
     return Long.valueOf(findLargestPrimeFactor(NUMBER));
   }
 

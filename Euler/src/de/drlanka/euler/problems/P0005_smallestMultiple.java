@@ -11,7 +11,7 @@ public class P0005_smallestMultiple implements EulerProblem {
   private static final int MAX=20; 
   
   @Override
-  public Object complicatedWay() {
+  public Object standardWay() {
     Map<Long, Long> primes=new HashMap<>();
     for(int i=2;i<=MAX;i++) {
       for(Map.Entry<Long,Long> entry:Prime.findPrimes(i).entrySet()) {

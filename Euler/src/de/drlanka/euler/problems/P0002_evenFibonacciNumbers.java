@@ -8,7 +8,7 @@ public class P0002_evenFibonacciNumbers implements EulerProblem, EulerProblemTri
   private static final int BOUND=4_000_000; 
   
   @Override
-  public Object complicatedWay() {
+  public Object standardWay() {
     double sqrt5=Math.sqrt(5);
     double q1=Math.pow((1+sqrt5)/2,3);
     double q2=Math.pow((1-sqrt5)/2,3);

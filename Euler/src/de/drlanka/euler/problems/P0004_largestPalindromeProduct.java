@@ -7,7 +7,7 @@ public class P0004_largestPalindromeProduct implements EulerProblem {
   private static final int MAX=999; 
   
   @Override
-  public Object complicatedWay() {
+  public Object standardWay() {
     boolean found=false;
     int maxPalindrome=Integer.MAX_VALUE;
     for(int sum=MAX+MAX;sum>1;sum--) {
