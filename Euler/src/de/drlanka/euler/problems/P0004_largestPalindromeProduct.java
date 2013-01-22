@@ -13,6 +13,8 @@ public class P0004_largestPalindromeProduct implements EulerProblem {
     for(int sum=MAX+MAX;sum>1;sum--) {
       for(int first=sum/2;first>0;first--) {
         int second=sum-first;
+        if(second>MAX)
+          break;
         int product=first*second;
         if(isPalindrome(product)) {
           if(found==false) {
@@ -22,7 +24,7 @@ public class P0004_largestPalindromeProduct implements EulerProblem {
             maxPalindrome=product;
           }
         }
-        if(product<maxPalindrome)
+        if(found && product<=maxPalindrome)
           break;
       }
         

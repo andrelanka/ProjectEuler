@@ -1,8 +1,12 @@
 package de.drlanka.euler.problems;
 
-import de.drlanka.euler.EulerProblem;
+import java.util.Collections;
 
-public class P0003_largestPrimeNumber implements EulerProblem {
+import de.drlanka.euler.EulerProblem;
+import de.drlanka.euler.EulerProblemTrivial;
+import de.drlanka.euler.lib.Prime;
+
+public class P0003_largestPrimeNumber implements EulerProblem, EulerProblemTrivial {
 
   private static final long NUMBER=600851475143L; 
   
@@ -21,6 +25,11 @@ public class P0003_largestPrimeNumber implements EulerProblem {
       if(number%divisor==0)
         return Math.max(divisor, findLargestPrimeFactor(number/divisor));
     return number;
+  }
+  
+  @Override
+  public Object easyWay() {
+    return Collections.max(Prime.findPrimes(NUMBER).keySet());
   }
 
 }
