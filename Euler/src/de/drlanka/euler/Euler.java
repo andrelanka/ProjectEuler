@@ -50,7 +50,7 @@ public class Euler {
         Object trivialSolution = ((EulerProblemTrivial) problem).easyWay();
         end = System.nanoTime();
         System.out.println("Trivial solution for problem " + type.getSimpleName() + " is " + trivialSolution
-            + " and was found in " + formatTimespan(start, end) + " seconds");
+            + " and was found in " + formatTimespan(start, end));
         if (solution.equals(trivialSolution) == false)
           throw new RuntimeException("Solutions for problem " + type.getSimpleName() + " don't match");
       }
