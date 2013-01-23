@@ -14,7 +14,7 @@ public class P0005_smallestMultiple implements EulerProblem {
   public Object standardWay() {
     Map<Long, Long> primes=new HashMap<>();
     for(int i=2;i<=MAX;i++) {
-      for(Map.Entry<Long,Long> entry:Prime.findPrimes(i).entrySet()) {
+      for(Map.Entry<Long,Long> entry:Prime.findPrimeFactorization(i).entrySet()) {
         Long current=primes.get(entry.getKey());
         if(current==null || current.longValue()<entry.getValue().longValue()) {
           primes.put(entry.getKey(), entry.getValue());

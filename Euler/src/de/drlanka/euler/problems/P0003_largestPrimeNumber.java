@@ -29,7 +29,7 @@ public class P0003_largestPrimeNumber implements EulerProblem, EulerProblemTrivi
   
   @Override
   public Object easyWay() {
-    return Collections.max(Prime.findPrimes(NUMBER).keySet());
+    return Collections.max(Prime.findPrimeFactorization(NUMBER).keySet());
   }
 
 }
