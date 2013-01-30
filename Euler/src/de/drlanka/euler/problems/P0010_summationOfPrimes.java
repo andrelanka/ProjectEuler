@@ -1,20 +1,20 @@
 package de.drlanka.euler.problems;
 
-import java.util.List;
+import java.util.Set;
 
 import de.drlanka.euler.EulerProblem;
 import de.drlanka.euler.lib.Prime;
 
 public class P0010_summationOfPrimes implements EulerProblem {
 
-  protected int upperPrimesBound=2_000_000;
+  protected long upperPrimesBound=2_000_000;
   
   @Override
   public Object standardWay() {
-    List<Integer> primesBelow = Prime.findAllPrimesBelow(upperPrimesBound);
+    Set<Long> primesBelow = Prime.findAllPrimesBelow(upperPrimesBound);
     long sum=0;
-    for(Integer prime : primesBelow)
-      sum+=prime.intValue();
+    for(Long prime : primesBelow)
+      sum+=prime.longValue();
     return Long.valueOf(sum);
   }
 

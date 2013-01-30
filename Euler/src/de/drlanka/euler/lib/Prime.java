@@ -1,12 +1,26 @@
 package de.drlanka.euler.lib;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class Prime {
+
+  private static SortedSet<Long> primes=new TreeSet<>();
+  
+  static {
+    initialize();
+  }
+
+  protected static void initialize() {
+    primesFoundUpperBound=2;
+    primes.add(Long.valueOf(2));
+  }
+  
+  /** Indicates that {@link #primes} contains all primes between 2 and this value (including both bounds if possible)*/
+  private static long primesFoundUpperBound=2;
 
   public static Map<Long, Long> findPrimeFactorization(long number) {
     Map<Long, Long> primeFactors=new HashMap<>();
@@ -31,7 +45,7 @@ public class Prime {
       return;
     }
     long max=(long)Math.sqrt(number);
-    for(long divisor=3;divisor<=max;divisor+=2)
+    for(long divisor : findAllPrimesBelow(max+1))
       if(number%divisor==0) {
         incrementKey(primeFactorizationprimes, divisor);
         findPrimeFactorization(number/divisor, primeFactorizationprimes);
@@ -49,34 +63,32 @@ public class Prime {
       primes.put(boxedKey, Long.valueOf(oldKey.longValue()+1));
   }
   
-  public static List<Integer> findAllPrimesBelow(int bound) {
+  public static SortedSet<Long> findAllPrimesBelow(long bound) {
     
-    if(bound<2)
-      return Collections.emptyList();
-
-    List<Integer> primes=new ArrayList<>();
-    primes.add(Integer.valueOf(2));
-    int current=3;
-    while(current<bound) {
-      if(isPrime(primes, current))
-        primes.add(Integer.valueOf(current));
-      current+=2;
+    if(primesFoundUpperBound<bound) {
+      long current=primesFoundUpperBound+1;
+      if(current%2==0)
+        current++;
+      while(current<bound) {
+        if(isPrime(current)) {
+          primes.add(Long.valueOf(current));
+          primesFoundUpperBound=current;
+        }
+        current+=2;
+      }
+      
     }
-    return primes;
-
+    return Collections.unmodifiableSortedSet(primes.headSet(Long.valueOf(bound)));
   }
 
-  protected static boolean isPrime(List<Integer> primes, int current) {
+  protected static boolean isPrime(long current) {
     boolean isPrime=true;
     
-    for(int prime:primes) {
-      
+    int bound=(int)Math.sqrt(current);
+    
+    for(long prime:findAllPrimesBelow(bound+1)) {      
       if(current % prime == 0) {
         isPrime=false;
-        break;
-      }
-      if(prime*prime>current) {
-        isPrime=true;
         break;
       }
     }
