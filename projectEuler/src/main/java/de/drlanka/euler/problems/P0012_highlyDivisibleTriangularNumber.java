@@ -10,7 +10,7 @@ public class P0012_highlyDivisibleTriangularNumber implements EulerProblem {
   protected long divisorCount = 500;
 
   @Override
-  public Object standardWay() {
+  public Object solve() {
     long sum = 0;
     for (long currentSummand = 1;; currentSummand++) {
       sum += currentSummand;

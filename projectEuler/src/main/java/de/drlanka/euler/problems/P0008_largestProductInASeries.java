@@ -29,7 +29,7 @@ public class P0008_largestProductInASeries implements EulerProblem {
       + "71636269561882670428252483600823257530420752963450";
 
   @Override
-  public Object standardWay() {
+  public Object solve() {
     int max = 0;
     for (int i = length; i < number.length()-length; i++)
       max=Math.max(max, productFromPosition(i));

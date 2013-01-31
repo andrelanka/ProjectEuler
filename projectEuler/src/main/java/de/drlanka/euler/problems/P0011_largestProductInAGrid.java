@@ -4,7 +4,7 @@ import de.drlanka.euler.EulerProblem;
 
 public class P0011_largestProductInAGrid implements EulerProblem {
   
-  protected int productLength=4;
+  public int productLength=4;
   
   public static final int GRID_WIDTH=20;
   public static final int GRID_HEIGHT=20;
@@ -34,9 +34,9 @@ public class P0011_largestProductInAGrid implements EulerProblem {
   private int[][] numbers;
   
   @Override
-  public Object standardWay() {
+  public Object solve() {
     numbers = readFromGrid(GRID_HEIGHT, GRID_WIDTH);
-    int max=0;
+    long max=0;
     for(int row=0;row<GRID_HEIGHT;row++)
       for(int column=0;column<GRID_WIDTH;column++) {
         max=Math.max(max, product(row, column, 0, 1));
@@ -44,7 +44,7 @@ public class P0011_largestProductInAGrid implements EulerProblem {
         max=Math.max(max, product(row, column, 1, 1));
         max=Math.max(max, product(row, column, 1, -1));
       }
-    return Integer.valueOf(max);
+    return Long.valueOf(max);
  }
 
   private int[][] readFromGrid(int rows, int columns) {
@@ -73,7 +73,7 @@ public class P0011_largestProductInAGrid implements EulerProblem {
   
   /** @returns The product of fixed length starting in the given row and column. 
    * Adds rowStep and columnsStep to the indexes for each factor. Returns -1 if the product can't be calculated (grid bounds exceeded) */
-  private int product(int row, int column, int rowStep, int columnStep) {
+  private long product(int row, int column, int rowStep, int columnStep) {
     int rowEnd=row+rowStep*productLength;
     if(rowEnd<0 || rowEnd>GRID_HEIGHT)
       return -1;
@@ -82,7 +82,7 @@ public class P0011_largestProductInAGrid implements EulerProblem {
     if(columnEnd<0 || columnEnd>GRID_WIDTH)
       return -1;
     
-    int product=1;
+    long product=1;
     for(int i=0;i<productLength;i++)
       product*=numbers[row+i*rowStep][column+i*columnStep];
     return product;

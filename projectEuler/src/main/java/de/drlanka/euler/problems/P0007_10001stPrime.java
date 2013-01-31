@@ -7,10 +7,10 @@ import de.drlanka.euler.EulerProblem;
 
 public class P0007_10001stPrime implements EulerProblem {
   
-  static int bound=10001;
+  int bound=10001;
 
   @Override
-  public Object standardWay() {
+  public Object solve() {
     List<Integer> primes=new ArrayList<>(bound);
     primes.add(Integer.valueOf(2));
     int current=3;

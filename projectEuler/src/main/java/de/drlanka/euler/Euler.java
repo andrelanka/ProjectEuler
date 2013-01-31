@@ -40,7 +40,7 @@ public class Euler {
     }
     if (problem != null) {
       long start = System.nanoTime();
-      Object solution = problem.standardWay();
+      Object solution = problem.solve();
       long end = System.nanoTime();
       System.out.println("Smart   solution for problem " + type.getSimpleName() + " is " + solution
           + " and was found in " + formatTimespan(start, end));

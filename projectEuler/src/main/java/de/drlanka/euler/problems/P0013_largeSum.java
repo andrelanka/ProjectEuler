@@ -114,7 +114,7 @@ public class P0013_largeSum implements EulerProblem {
   
 
   @Override
-  public Object standardWay() {
+  public Object solve() {
 
     int reserveDigits = (int) Math.log10(NUMBER_COUNT);
     long firstDigits;

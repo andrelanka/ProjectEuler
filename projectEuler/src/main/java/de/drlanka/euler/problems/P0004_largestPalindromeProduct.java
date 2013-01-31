@@ -4,16 +4,16 @@ import de.drlanka.euler.EulerProblem;
 
 public class P0004_largestPalindromeProduct implements EulerProblem {
 
-  private static final int MAX=999; 
+  int maxFactor=999; 
   
   @Override
-  public Object standardWay() {
+  public Object solve() {
     boolean found=false;
     int maxPalindrome=Integer.MAX_VALUE;
-    for(int sum=MAX+MAX;sum>1;sum--) {
+    for(int sum=maxFactor+maxFactor;sum>1;sum--) {
       for(int first=sum/2;first>0;first--) {
         int second=sum-first;
-        if(second>MAX)
+        if(second>maxFactor)
           break;
         int product=first*second;
         if(isPalindrome(product)) {
