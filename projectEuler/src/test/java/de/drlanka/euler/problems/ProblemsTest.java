@@ -115,4 +115,12 @@ public class ProblemsTest extends TestCase {
     p0017.maxCount=5;
     assertEquals(19, p0017.solve());
   }
+  
+  public void testProblem0018() {
+    P0018_maximumPathSumI p0018=new P0018_maximumPathSumI();    
+    assertEquals(p0018.lines*(p0018.lines+1)/2, p0018.triangle.length);
+    
+    p0018.lines=3;
+    assertEquals(221, p0018.solve());
+  }
 }
