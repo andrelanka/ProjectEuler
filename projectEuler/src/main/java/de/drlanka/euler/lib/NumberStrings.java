@@ -13,4 +13,11 @@ public class NumberStrings {
     return decodeString(""+value, 0, digits);
   }
 
+  public static long digitSum(String number) {
+    long sum=0;
+    for(int i=number.length()-1;i>=0;i--)
+      sum+=decodeString(number, i, 1);
+    return sum;
+  }
+
 }

@@ -109,35 +109,41 @@ public class ProblemsTest extends TestCase {
     p0016.power = 15;
     assertEquals(26L, p0016.solve());
   }
-  
+
   public void testProblem0017() {
     P0017_numberLetterCounts p0017 = new P0017_numberLetterCounts();
-    assertTrue(p0017.maxCount<=1000);
-    
-    p0017.maxCount=5;
+    assertTrue(p0017.maxCount <= 1000);
+
+    p0017.maxCount = 5;
     assertEquals(19, p0017.solve());
   }
-  
+
   public void testProblem0018() {
-    P0018_maximumPathSumI p0018=new P0018_maximumPathSumI();    
-    assertEquals(p0018.lines*(p0018.lines+1)/2, p0018.triangle.length);
-    
-    p0018.lines=3;
+    P0018_maximumPathSumI p0018 = new P0018_maximumPathSumI();
+    assertEquals(p0018.lines * (p0018.lines + 1) / 2, p0018.triangle.length);
+
+    p0018.lines = 3;
     assertEquals(221, p0018.solve());
   }
-  
+
   public void testProblem0019() {
     P0019_countingSundays p0019 = new P0019_countingSundays();
-    p0019.startDate=new GregorianCalendar(2013,01,01);
-    p0019.endDate=new GregorianCalendar(2016,11,31);
+    p0019.startDate = new GregorianCalendar(2013, 01, 01);
+    p0019.endDate = new GregorianCalendar(2016, 11, 31);
     assertEquals(7, p0019.solve());
   }
 
+  public void testProblem0020() {
+    P0020_factorialDigitSum p0020 = new P0020_factorialDigitSum();
+    p0020.n = 10;
+    assertEquals(27L, p0020.solve());
+  }
+
   public void testProblem0067() {
-    P0067_maximumPathSumII p0067=new P0067_maximumPathSumII();    
-    assertEquals(p0067.lines*(p0067.lines+1)/2, p0067.triangle.length);
-    
-    p0067.lines=3;
+    P0067_maximumPathSumII p0067 = new P0067_maximumPathSumII();
+    assertEquals(p0067.lines * (p0067.lines + 1) / 2, p0067.triangle.length);
+
+    p0067.lines = 3;
     assertEquals(184, p0067.solve());
   }
 
