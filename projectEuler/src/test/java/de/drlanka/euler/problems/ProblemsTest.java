@@ -1,6 +1,6 @@
 package de.drlanka.euler.problems;
 
-import java.io.IOException;
+import java.util.GregorianCalendar;
 
 import junit.framework.TestCase;
 
@@ -124,6 +124,13 @@ public class ProblemsTest extends TestCase {
     
     p0018.lines=3;
     assertEquals(221, p0018.solve());
+  }
+  
+  public void testProblem0019() {
+    P0019_countingSundays p0019 = new P0019_countingSundays();
+    p0019.startDate=new GregorianCalendar(2013,01,01);
+    p0019.endDate=new GregorianCalendar(2016,11,31);
+    assertEquals(7, p0019.solve());
   }
 
   public void testProblem0067() {
