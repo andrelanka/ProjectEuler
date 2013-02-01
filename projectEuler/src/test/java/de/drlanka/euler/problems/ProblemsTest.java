@@ -107,4 +107,12 @@ public class ProblemsTest extends TestCase {
     p0016.power = 15;
     assertEquals(26L, p0016.solve());
   }
+  
+  public void testProblem0017() {
+    P0017_numberLetterCounts p0017 = new P0017_numberLetterCounts();
+    assertTrue(p0017.maxCount<=1000);
+    
+    p0017.maxCount=5;
+    assertEquals(19, p0017.solve());
+  }
 }
