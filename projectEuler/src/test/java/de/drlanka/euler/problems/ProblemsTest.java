@@ -1,5 +1,7 @@
 package de.drlanka.euler.problems;
 
+import java.io.IOException;
+
 import junit.framework.TestCase;
 
 public class ProblemsTest extends TestCase {
@@ -123,4 +125,13 @@ public class ProblemsTest extends TestCase {
     p0018.lines=3;
     assertEquals(221, p0018.solve());
   }
+
+  public void testProblem0067() {
+    P0067_maximumPathSumII p0067=new P0067_maximumPathSumII();    
+    assertEquals(p0067.lines*(p0067.lines+1)/2, p0067.triangle.length);
+    
+    p0067.lines=3;
+    assertEquals(184, p0067.solve());
+  }
+
 }

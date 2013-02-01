@@ -7,9 +7,9 @@ import de.drlanka.euler.EulerProblem;
 
 public class P0018_maximumPathSumI implements EulerProblem {
   
-  int lines=15;
+  protected int lines=15;
   
-  int[] triangle=new int[]{
+  protected int[] triangle=new int[]{
   75,
   95, 64,
   17, 47, 82,
