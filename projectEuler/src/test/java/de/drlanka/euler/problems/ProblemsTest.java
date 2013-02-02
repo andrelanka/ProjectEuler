@@ -138,6 +138,12 @@ public class ProblemsTest extends TestCase {
     p0020.n = 10;
     assertEquals(27L, p0020.solve());
   }
+  
+  public void testProblem0021() {
+    P0021_amicableNumbers p0021=new P0021_amicableNumbers();
+    assertEquals(220, p0021.sumOfProperDivisors(284));
+    assertEquals(284, p0021.sumOfProperDivisors(220));
+  }
 
   public void testProblem0067() {
     P0067_maximumPathSumII p0067 = new P0067_maximumPathSumII();
