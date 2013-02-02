@@ -2,7 +2,6 @@ package de.drlanka.euler.problems;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,9 +10,7 @@ public class P0067_maximumPathSumII extends P0018_maximumPathSumI {
 
   public P0067_maximumPathSumII() {
 
-    try {
-      InputStream stream = P0067_maximumPathSumII.class.getResourceAsStream("/inputProblem0067.txt");
-      BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+    try (BufferedReader reader = new BufferedReader(new InputStreamReader(P0067_maximumPathSumII.class.getResourceAsStream("/inputProblem0067.txt")));){
 
       List<String> allLines=new LinkedList<>();
       String nextLine=null;

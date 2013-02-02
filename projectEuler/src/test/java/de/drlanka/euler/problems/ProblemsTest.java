@@ -144,6 +144,12 @@ public class ProblemsTest extends TestCase {
     assertEquals(220, p0021.sumOfProperDivisors(284));
     assertEquals(284, p0021.sumOfProperDivisors(220));
   }
+  
+  public void testProblem0022() {
+    assertEquals(1,Character.digit('A', 36)-9);
+    assertEquals(5,Character.digit('E', 36)-9);
+    assertEquals(26,Character.digit('Z', 36)-9);
+  }
 
   public void testProblem0067() {
     P0067_maximumPathSumII p0067 = new P0067_maximumPathSumII();
