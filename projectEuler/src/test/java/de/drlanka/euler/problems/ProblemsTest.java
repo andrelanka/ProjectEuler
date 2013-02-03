@@ -161,9 +161,9 @@ public class ProblemsTest extends TestCase {
   }
   
   public void testProblem0413() {
-    P0413_oneChildNumbers p0413=new P0413_oneChildNumbers();
-    
-    p0413.nextNumber();
+    P0413_oneChildNumbers_long p0413=new P0413_oneChildNumbers_long();
+    p0413.initialize();
+//    p0413.nextNumber();
     assertEquals("1000000000000000000", p0413.getNumberString());
 
 //    p0413.tailOfNumber=1000;
@@ -185,27 +185,27 @@ public class ProblemsTest extends TestCase {
     p0413.incrementPosition(17);
     assertEquals("2000000000000000010", p0413.getNumberString());
     
-    p0413=new P0413_oneChildNumbers();
+    p0413=new P0413_oneChildNumbers_long();
     p0413.currentLength=4;
     p0413.initialize();
-    p0413.number=new BigInteger("5671");
+    p0413.tailOfNumber=5671;
     assertTrue(p0413.isOneChild()==-1);
 
-    p0413=new P0413_oneChildNumbers();
+    p0413=new P0413_oneChildNumbers_long();
     p0413.currentLength=4;
     p0413.initialize();
-    p0413.number=new BigInteger("5641");
+    p0413.tailOfNumber=5641;
     assertTrue(p0413.isOneChild()==2);
     
-    p0413=new P0413_oneChildNumbers();
+    p0413=new P0413_oneChildNumbers_long();
     p0413.boundExponent=1;
     assertEquals(9,p0413.solve());
 
-    p0413=new P0413_oneChildNumbers();
+    p0413=new P0413_oneChildNumbers_long();
     p0413.boundExponent=3;
-   assertEquals(389,p0413.solve());
+    assertEquals(389,p0413.solve());
 
-    p0413=new P0413_oneChildNumbers();
+    p0413=new P0413_oneChildNumbers_long();
     p0413.boundExponent=7;
     assertEquals(277674,p0413.solve());
 
