@@ -1,5 +1,6 @@
 package de.drlanka.euler.problems;
 
+import java.math.BigInteger;
 import java.util.GregorianCalendar;
 
 import junit.framework.TestCase;
@@ -157,6 +158,57 @@ public class ProblemsTest extends TestCase {
 
     p0067.lines = 3;
     assertEquals(184, p0067.solve());
+  }
+  
+  public void testProblem0413() {
+    P0413_oneChildNumbers p0413=new P0413_oneChildNumbers();
+    
+    p0413.nextNumber();
+    assertEquals("1000000000000000000", p0413.getNumberString());
+
+//    p0413.tailOfNumber=1000;
+//    p0413.nextNumber();
+//    assertEquals("1001", p0413.getNumberString());
+    
+//    p0413.headOfNumber=2;
+//    p0413.nextNumber();
+//    assertEquals("2000000000000001002", p0413.getNumberString());
+//    
+    
+    p0413.incrementPosition(0);
+    assertEquals("2000000000000000000", p0413.getNumberString());
+    
+    p0413.nextNumber();
+    p0413.incrementPosition(18);
+    assertEquals("2000000000000000002", p0413.getNumberString());
+
+    p0413.incrementPosition(17);
+    assertEquals("2000000000000000010", p0413.getNumberString());
+    
+    p0413=new P0413_oneChildNumbers();
+    p0413.currentLength=4;
+    p0413.initialize();
+    p0413.number=new BigInteger("5671");
+    assertTrue(p0413.isOneChild()==-1);
+
+    p0413=new P0413_oneChildNumbers();
+    p0413.currentLength=4;
+    p0413.initialize();
+    p0413.number=new BigInteger("5641");
+    assertTrue(p0413.isOneChild()==2);
+    
+    p0413=new P0413_oneChildNumbers();
+    p0413.boundExponent=1;
+    assertEquals(9,p0413.solve());
+
+    p0413=new P0413_oneChildNumbers();
+    p0413.boundExponent=3;
+   assertEquals(389,p0413.solve());
+
+    p0413=new P0413_oneChildNumbers();
+    p0413.boundExponent=7;
+    assertEquals(277674,p0413.solve());
+
   }
 
 }
