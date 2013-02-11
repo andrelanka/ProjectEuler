@@ -161,10 +161,10 @@ public class ProblemsTest extends TestCase {
   }
   
   public void testProblem0413() {
-    P0413_oneChildNumbers_long p0413=new P0413_oneChildNumbers_long();
+    P0413_oneChildNumbers_DFS p0413=new P0413_oneChildNumbers_DFS();
     p0413.initialize();
 //    p0413.nextNumber();
-    assertEquals("1000000000000000000", p0413.getNumberString());
+//    assertEquals("1000000000000000000", p0413.getNumberString());
 
 //    p0413.tailOfNumber=1000;
 //    p0413.nextNumber();
@@ -175,39 +175,46 @@ public class ProblemsTest extends TestCase {
 //    assertEquals("2000000000000001002", p0413.getNumberString());
 //    
     
-    p0413.incrementPosition(0);
-    assertEquals("2000000000000000000", p0413.getNumberString());
+//    p0413.incrementPosition(0);
+//    assertEquals("2000000000000000000", p0413.getNumberString());
+//    
+//    p0413.nextNumber();
+//    p0413.incrementPosition(18);
+//    assertEquals("2000000000000000002", p0413.getNumberString());
+//
+//    p0413.incrementPosition(17);
+//    assertEquals("2000000000000000010", p0413.getNumberString());
+//    
+//    p0413=new P0413_oneChildNumbers_long();
+//    p0413.currentLength=4;
+//    p0413.initialize();
+//    p0413.tailOfNumber=5671;
+//    assertTrue(p0413.isOneChild()==-1);
+//
+//    p0413=new P0413_oneChildNumbers_long();
+//    p0413.currentLength=4;
+//    p0413.initialize();
+//    p0413.tailOfNumber=5641;
+//    assertTrue(p0413.isOneChild()==2);
     
-    p0413.nextNumber();
-    p0413.incrementPosition(18);
-    assertEquals("2000000000000000002", p0413.getNumberString());
-
-    p0413.incrementPosition(17);
-    assertEquals("2000000000000000010", p0413.getNumberString());
-    
-    p0413=new P0413_oneChildNumbers_long();
-    p0413.currentLength=4;
-    p0413.initialize();
-    p0413.tailOfNumber=5671;
-    assertTrue(p0413.isOneChild()==-1);
-
-    p0413=new P0413_oneChildNumbers_long();
-    p0413.currentLength=4;
-    p0413.initialize();
-    p0413.tailOfNumber=5641;
-    assertTrue(p0413.isOneChild()==2);
-    
-    p0413=new P0413_oneChildNumbers_long();
+    p0413=new P0413_oneChildNumbers_DFS();
     p0413.boundExponent=1;
     assertEquals(9,p0413.solve());
 
-    p0413=new P0413_oneChildNumbers_long();
+    p0413=new P0413_oneChildNumbers_DFS();
     p0413.boundExponent=3;
     assertEquals(389,p0413.solve());
 
-    p0413=new P0413_oneChildNumbers_long();
+    p0413=new P0413_oneChildNumbers_DFS();
     p0413.boundExponent=7;
     assertEquals(277674,p0413.solve());
+    
+    int[] result=new int[]{0,9,29,389,3_090,7_186,116_652,277_674,13_346_257,15_483_217,15_483_217,0,0};
+    for(int i=1;i<11;i++) {
+      p0413=new P0413_oneChildNumbers_DFS();
+      p0413.boundExponent=i;
+      assertEquals(result[i],p0413.solve());
+    }
 
   }
 

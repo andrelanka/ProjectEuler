@@ -1,10 +1,6 @@
 package de.drlanka.euler.problems;
 
-import java.math.BigInteger;
-
-import de.drlanka.euler.EulerProblem;
-
-public class P0413_oneChildNumbers_long implements EulerProblem {
+public class P0413_oneChildNumbers_simpleLong  {
   
   int boundExponent=19;   //Currently 19 is max
   
@@ -28,9 +24,7 @@ public class P0413_oneChildNumbers_long implements EulerProblem {
   }
   final static int tailExponent=18;
 
-  private BigInteger modInt;
-
-  @Override
+  
   public Object solve() {
     int result=0;
 //    nextNumber();
