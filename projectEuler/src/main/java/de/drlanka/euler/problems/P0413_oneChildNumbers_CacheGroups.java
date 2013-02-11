@@ -1,19 +1,46 @@
 package de.drlanka.euler.problems;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import gnu.trove.procedure.TIntProcedure;
+import gnu.trove.set.hash.TIntHashSet;
+import gnu.trove.set.hash.TLongHashSet;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import de.drlanka.euler.EulerProblem;
 
 public class P0413_oneChildNumbers_CacheGroups implements EulerProblem {
 
-  int boundExponent = 19; // Currently 19 is max
+  Logger logger=Logger.getLogger(this.getClass().getSimpleName());
+  
+  public final static int MAX_BOUND = 19;
 
-  private Map<Integer, Set<Integer>> groupCache = new HashMap<>();
-  private Set<Integer> keys = new HashSet<>();
+  int boundExponent = 19;
+
+  /**
+   * Holds the solutions of length k having no substring divisible by
+   * {@link #currentLength}
+   */
+  private TIntHashSet[] ex0Cache = new TIntHashSet[MAX_BOUND];
+  
+  private TLongHashSet solutions=new TLongHashSet();
+
+  /**
+   * Holds the solutions of length k having exactly one substring divisible by
+   * {@link #currentLength}
+   */
+  private TIntHashSet[] ex1Cache = new TIntHashSet[MAX_BOUND];
+
+  public P0413_oneChildNumbers_CacheGroups() {
+    for (int i = 0; i < MAX_BOUND; i++) {
+      ex0Cache[i] = new TIntHashSet();
+      ex1Cache[i] = new TIntHashSet();
+    }
+    currentNumbers = new int[MAX_BOUND];
+  }
+
+  // ex0(k)=ex0(k-1)*ex0(1);
+  // ex1(k)=ex1(k/2)*ex0(k/2)+ex0(k/2)*ex1(k/2)+ex0(k-1)*ex0(1)
 
   int currentLength;
 
@@ -22,8 +49,6 @@ public class P0413_oneChildNumbers_CacheGroups implements EulerProblem {
 
   int groupLength;
 
-  private int groupBound;
-
   @Override
   public Object solve() {
     for (int i = 1; i <= boundExponent; i++) {
@@ -31,79 +56,161 @@ public class P0413_oneChildNumbers_CacheGroups implements EulerProblem {
         continue;
       currentLength = i;
       initialize();
-      next(0, false);
+      calculateEx0();
+      extendEx0();
+//      next(0, false);
     }
-    return result;
+    return solutions.size();
   }
 
-  void next(int thisPathLength, boolean hadDivisor) {
-    if (thisPathLength == 3) {
-      System.out.println(Arrays.toString(currentNumbers));
+  void extendEx0() {
+    if (currentLength == 1) {
+      solutions.clear();
+      for(int i=1;i<10;i++)
+        solutions.add(i);
+      return;
     }
-    // Check current path
-    if (thisPathLength > 0) {
-      long mod = 0;
-      for (int j = thisPathLength - 1; j >= 0; j--) {
-        mod = (mod * 10 + currentNumbers[j]) % currentLength;
-        if (mod == 0) {
-          if (hadDivisor)
-            return;
-          else
-            hadDivisor = true;
+    final int length=currentLength/2;
+    final int count=ex0Cache[length].size();
+    final long start=System.nanoTime();
+    ex0Cache[length].forEach(new TIntProcedure() {
+      
+      int thisCount=0;
+      long lastElapsed;
+      
+      @Override
+      public boolean execute(int part) {
+        thisCount++;
+        setOnPosition(0, part, length);
+        fillRight(length,false);
+        int startPos=currentLength-length;
+        setOnPosition(startPos, part, length);
+        fillLeft(startPos,false);
+        long elapsed=System.nanoTime()-start;
+        if((elapsed-lastElapsed>10_000_000_000L) && logger.isLoggable(Level.INFO)) {
+          lastElapsed=elapsed;
+          logger.info(((elapsed * count / thisCount - elapsed) / 1000 / 1000 / 1000)
+              + " seconds remain");
         }
+        return true;
       }
-      if (thisPathLength == currentLength) {
-        if (hadDivisor)
-          result++;
-        return;
-      }
+    });
+    System.out.println("Current length: "+currentLength+" gives "+solutions.size());
+  }
+
+  void calculateEx0() {
+    TIntHashSet set = ex0Cache[1];
+    for (int n = 1; n < 10; n++) {
+      if (n % currentLength > 0)
+        set.add(n);
     }
+    for (int i = 1; i < currentLength/2; i++) {
+      final int firstLength = i;
+      TIntHashSet firstSet = ex0Cache[i];
+      final TIntHashSet secondSet = ex0Cache[1];
+      final TIntHashSet nextSet = ex0Cache[i + 1];
+      firstSet.forEach(new TIntProcedure() {
+
+        @Override
+        public boolean execute(final int first) {
+          secondSet.forEach(new TIntProcedure() {
+
+            @Override
+            public boolean execute(int second) {
+              int remain = first;
+              int divisor = 1;
+              for (int k = 0; k <= firstLength; k++) {
+                if ((((remain % divisor) * 10 + second) % currentLength) == 0)
+                  return true;
+                divisor*=10;
+              }
+              nextSet.add(first * 10 + second);
+              return true;
+            }
+          });
+          return true;
+        }
+      });
+      System.out.println((i+1)+": "+nextSet.size());
+    }
+  }
+  
+  void fillRight(int thisPathLength, boolean hadDivisor) {
 
     for (int i = 0; i < 10; i++) {
-      if (thisPathLength == currentLength - 1 && i == 0) // Skip leading 0
-        continue;
       currentNumbers[thisPathLength] = i;
-      next(thisPathLength + 1, hadDivisor);
+
+      // Check current path
+      boolean nowFoundDivisor = false;
+      boolean goAhead = false;
+
+      int mod = 0;
+      long multiplier = 1;
+      for (int j = thisPathLength; j >= 0; j--) {
+        mod = (int) ((mod + currentNumbers[j] * multiplier) % currentLength);
+        if (mod == 0) {
+          if (nowFoundDivisor || hadDivisor)
+            goAhead = true;
+          nowFoundDivisor = true;
+          if (goAhead)
+            break;
+        }
+        multiplier *= 10;
+      }
+      if (goAhead)
+        continue;
+      if (thisPathLength == currentLength - 1) {
+        if (nowFoundDivisor ^ hadDivisor)
+          solutions.add(fromCurrentNumbers());
+      } else
+        fillRight(thisPathLength + 1, nowFoundDivisor || hadDivisor);
     }
+  }  
+
+  private long fromCurrentNumbers() {
+    long value=0;
+    for(int i=0;i<currentLength;i++)
+      value=value*10+currentNumbers[i];
+    return value;
   }
 
-  void initialize() {
-    currentNumbers = new int[currentLength];
-    keys.clear();
-    groupCache.clear();
-    groupBound = (int) (Math.pow(10, groupLength));
+  void fillLeft(int thisPathStart, boolean hadDivisor) {
 
-    for (int i = 0; i < groupBound; i++) {
-      setOnPosition(0, i, groupLength);
-      if (isPossible(groupLength))
-        keys.add(i);
-    }
+    for (int i = 0; i < 10; i++) {
+      if(i==0 && thisPathStart==1)  //No leading 0
+        continue;
+      currentNumbers[thisPathStart-1] = i;
 
-    int pairsFound = 0;
-    for (Integer i : keys) {
-      setOnPosition(0, i, groupLength);
-      for (Integer j : keys) {
-        setOnPosition(groupLength, j, groupLength);
-        if (isPossible(2 * groupLength)) {
-          addToGroupCache(i, j);
-          pairsFound++;
+      // Check current path
+      boolean nowFoundDivisor = false;
+      boolean goAhead=false;
+
+      int mod = 0;
+      for (int j = thisPathStart-1; j < currentLength; j++) {
+        mod = (mod * 10 + currentNumbers[j]) % currentLength;
+        if (mod == 0) {
+          if(nowFoundDivisor||hadDivisor)
+            goAhead=true;
+          nowFoundDivisor=true;
+          if (goAhead)
+            break;
         }
       }
+      if(goAhead)
+        continue;
+      if (thisPathStart == 1) {
+        if (nowFoundDivisor^hadDivisor)
+          solutions.add(fromCurrentNumbers());
+      } else
+        fillLeft(thisPathStart-1, nowFoundDivisor||hadDivisor);
     }
+  }  
 
-    double percentage = pairsFound * 100 / groupBound / groupBound;
-  }
+  
+  void initialize() {
+    for(int i=0;i<MAX_BOUND;i++)
+      ex0Cache[i].clear();
 
-  private boolean isPossible(int length) {
-    int dividends = 0;
-    for (int i = 0; i < length; i++) {
-      for (int j = i + 1; j <= length; j++) {
-        dividends += countDividends(i, j);
-        if (dividends > 1)
-          return false;
-      }
-    }
-    return true;
   }
 
   private final void setOnPosition(int position, int number, int numberLength) {
@@ -113,31 +220,6 @@ public class P0413_oneChildNumbers_CacheGroups implements EulerProblem {
       number = number / 10;
     }
 
-  }
-
-  protected int countDividends(int lower, int upper) {
-    long mod = 0;
-    boolean hadDivisor = false;
-    for (int i = lower; i < upper; i++)
-      for (int j = upper - 1; j >= i; j--) {
-        mod = (mod * 10 + currentNumbers[j]) % currentLength;
-        if (mod == 0) {
-          if (hadDivisor)
-            return 2;
-          else
-            hadDivisor = true;
-        }
-      }
-    return hadDivisor ? 1 : 0;
-  }
-
-  private void addToGroupCache(Integer key, Integer value) {
-    Set<Integer> oldValue = groupCache.get(key);
-    if (oldValue == null) {
-      oldValue = new HashSet<>();
-      groupCache.put(key, oldValue);
-    }
-    oldValue.add(value);
   }
 
 }
