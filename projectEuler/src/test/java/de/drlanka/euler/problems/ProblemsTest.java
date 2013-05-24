@@ -1,6 +1,5 @@
 package de.drlanka.euler.problems;
 
-import java.math.BigInteger;
 import java.util.GregorianCalendar;
 
 import junit.framework.TestCase;
@@ -209,7 +208,7 @@ public class ProblemsTest extends TestCase {
     p0413.boundExponent=7;
     assertEquals(277674,p0413.solve());
     
-    int[] result=new int[]{0,9,29,389,3_090,7_186,116_652,277_674,13_346_257,15_483_217,15_483_217,0,0};
+    int[] result=new int[]{0,9,29,389,3_090,7_186,116_652,277_674,13_346_257,15_483_217,15_483_217,71_101_800,0};
     for(int i=1;i<11;i++) {
       p0413=new P0413_oneChildNumbers_CacheGroups();
       p0413.boundExponent=i;
